@@ -11,8 +11,10 @@ import yaml
 
 # Local
 from .registry import BlockRegistry, PromptRegistry
+# pylint: disable=unused-import
 from . import prompts
 from . import blocks
+
 
 
 OPERATOR_MAP = {
