@@ -10,13 +10,16 @@ import re
 import uuid
 
 # Third Party
-from datasets import Dataset
 import yaml
 
 # First Party
+from datasets import Dataset
+
 # pylint: disable=ungrouped-imports
 from instructlab.sdg import utils
 from instructlab.sdg.logger_config import setup_logger
+
+# Local
 from .datautils import safe_concatenate_datasets
 
 logger = setup_logger(__name__)
@@ -113,10 +116,10 @@ def create_auxiliary_dataset(generated_dataset: Dataset):
 
     # get module path of the current file
     module_dir = os.path.dirname(os.path.abspath(__file__))
-    aux_inst_path = os.path.join(module_dir, "../configs/knowledge/auxilary_instructions.yaml")
-    if os.path.isfile(
-            aux_inst_path
-    ):
+    aux_inst_path = os.path.join(
+        module_dir, "../configs/knowledge/auxilary_instructions.yaml"
+    )
+    if os.path.isfile(aux_inst_path):
         with open(aux_inst_path, "r", encoding="utf-8") as fp:
             auxiliary_inst = yaml.safe_load(fp)
     else:
@@ -226,8 +229,9 @@ def build_raft_dataset(ds: Dataset, p, num_doc_in_context=4):
             if random.uniform(0, 1) < p:
                 # golden/answer + distractor documents
                 docs = (
-                    random.sample(selected_docs, k=num_doc_in_context-1) + [answer_document]
-                    if len(selected_docs) >= (num_doc_in_context-1)
+                    random.sample(selected_docs, k=num_doc_in_context - 1)
+                    + [answer_document]
+                    if len(selected_docs) >= (num_doc_in_context - 1)
                     else selected_docs + [answer_document]
                 )
             else:
@@ -257,9 +261,8 @@ def build_raft_dataset(ds: Dataset, p, num_doc_in_context=4):
         rec["metadata"] = json.dumps(metadata)
         return rec
 
-    ds = ds.map(_pick_documents, fn_kwargs={"p": p} , remove_columns=["context"])
+    ds = ds.map(_pick_documents, fn_kwargs={"p": p}, remove_columns=["context"])
     return ds
-
 
 
 def _conv_pretrain(rec):

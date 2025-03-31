@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
-# Third Party
+# First Party
 from datasets import Dataset
 
 # Local
-from .block import Block
-from ..registry import BlockRegistry
 from ..logger_config import setup_logger
+from ..registry import BlockRegistry
+from .block import Block
 
 logger = setup_logger(__name__)
 
@@ -76,7 +76,9 @@ class CombineColumnsBlock(Block):
 
 @BlockRegistry.register("FlattenColumnsBlock")
 class FlattenColumnsBlock(Block):
-    def __init__(self, block_name: str, var_cols: list, value_name: str, var_name: str) -> None:
+    def __init__(
+        self, block_name: str, var_cols: list, value_name: str, var_name: str
+    ) -> None:
         super().__init__(block_name=block_name)
         self.var_cols = var_cols
         self.value_name = value_name
@@ -85,10 +87,12 @@ class FlattenColumnsBlock(Block):
     def generate(self, samples: Dataset) -> Dataset:
         df = samples.to_pandas()
         id_cols = [col for col in samples.column_names if col not in self.var_cols]
-        flatten_df = df.melt(id_vars=id_cols,
-                             value_vars=self.var_cols,
-                             value_name=self.value_name,
-                             var_name=self.var_name)
+        flatten_df = df.melt(
+            id_vars=id_cols,
+            value_vars=self.var_cols,
+            value_name=self.value_name,
+            var_name=self.var_name,
+        )
         return Dataset.from_pandas(flatten_df)
 
 
@@ -105,7 +109,9 @@ class DuplicateColumns(Block):
 
     def generate(self, samples: Dataset):
         for col_to_dup in self.columns_map:
-            samples = samples.add_column(self.columns_map[col_to_dup], samples[col_to_dup])
+            samples = samples.add_column(
+                self.columns_map[col_to_dup], samples[col_to_dup]
+            )
         return samples
 
 

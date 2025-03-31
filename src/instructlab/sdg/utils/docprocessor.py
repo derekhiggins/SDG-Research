@@ -3,17 +3,17 @@ from pathlib import Path
 import json
 
 # Third Party
-from datasets import Dataset
 from tabulate import tabulate
 from transformers import AutoTokenizer
 import yaml
 
 # First Party
+from datasets import Dataset
 from instructlab.sdg.logger_config import setup_logger
 
 # Local
-from .datautils import safe_concatenate_datasets
 from .chunking import chunk_document
+from .datautils import safe_concatenate_datasets
 
 logger = setup_logger(__name__)
 
@@ -34,6 +34,7 @@ def fuse_texts(text_list, short_length_threshold=100):
             previous_long_text = text
 
     return fused_texts
+
 
 # pylint: disable=unused-argument
 def handle_footnote(book_element):

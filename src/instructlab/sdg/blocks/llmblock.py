@@ -5,14 +5,16 @@ import json
 import re
 
 # Third Party
-from datasets import Dataset
 from jinja2 import Template
 import openai
 
+# First Party
+from datasets import Dataset
+
 # Local
-from .block import Block
 from ..logger_config import setup_logger
 from ..registry import BlockRegistry, PromptRegistry
+from .block import Block
 
 logger = setup_logger(__name__)
 
@@ -250,11 +252,12 @@ class ConditionalLLMBlock(LLMBlock):
                 # TODO: Can this be deleted?
                 # pylint: disable=unused-variable
                 filtered_config = {
-                    k: (v if v is not None else "") for k, v in self.block_config.items()
+                    k: (v if v is not None else "")
+                    for k, v in self.block_config.items()
                 }
-                self.prompt_template[config_key] = Template(self.prompt_struct.format(
-                    **self._load_config(config)
-                ))
+                self.prompt_template[config_key] = Template(
+                    self.prompt_struct.format(**self._load_config(config))
+                )
 
     def _format_prompt(self, sample: Dict) -> str:
         if isinstance(self.prompt_template, dict):
@@ -427,7 +430,9 @@ class LLMMessagesBlock(Block):
         results = []
         n = gen_kwargs.get("n", 1)
         for message in messages:
-            responses = self.client.chat.completions.create(messages=message, **generate_args)
+            responses = self.client.chat.completions.create(
+                messages=message, **generate_args
+            )
             if n > 1:
                 results.append([choice.message.content for choice in responses.choices])
             else:

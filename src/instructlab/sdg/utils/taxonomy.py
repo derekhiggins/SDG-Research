@@ -342,7 +342,7 @@ def _read_taxonomy_file(file_path: str, yaml_rules: Optional[str] = None):
 
         for seed_example in contents.get("seed_examples"):
             context = seed_example.get("context", "")
-            if 'questions_and_answers' in seed_example:
+            if "questions_and_answers" in seed_example:
                 question_answer_list = seed_example.get("questions_and_answers")
                 seed_instruction_data.append(
                     {
@@ -351,7 +351,7 @@ def _read_taxonomy_file(file_path: str, yaml_rules: Optional[str] = None):
                         "taxonomy_path": tax_path,
                         "document": documents,
                         "domain": domain,
-                        "document_outline": contents.get("document_outline")
+                        "document_outline": contents.get("document_outline"),
                     }
                 )
             else:
@@ -448,13 +448,19 @@ def _knowledge_leaf_node_to_samples(leaf_node, server_ctx_size, chunk_word_count
     for chunk in chunks:
         # pylint: disable=consider-using-enumerate
         for icl_ in leaf_node:
-            icl_query = {f"icl_query_{idx+1}": val["question"] for idx, val in enumerate(icl_["questions_and_answers"])}
-            icl_resp = {f"icl_response_{idx+1}": val["answer"] for idx, val in enumerate(icl_["questions_and_answers"])}
+            icl_query = {
+                f"icl_query_{idx+1}": val["question"]
+                for idx, val in enumerate(icl_["questions_and_answers"])
+            }
+            icl_resp = {
+                f"icl_response_{idx+1}": val["answer"]
+                for idx, val in enumerate(icl_["questions_and_answers"])
+            }
             samples_row = {
                 "icl_document": icl_["input"],
                 "document": chunk,
                 "document_outline": icl_["document_outline"],
-                "domain": domain
+                "domain": domain,
             }
             samples_row.update(icl_query)
             samples_row.update(icl_resp)

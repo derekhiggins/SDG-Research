@@ -10,12 +10,9 @@ import os
 import yaml
 
 # Local
-from .registry import BlockRegistry, PromptRegistry
 # pylint: disable=unused-import
-from . import prompts
-from . import blocks
-
-
+from . import blocks, prompts
+from .registry import BlockRegistry, PromptRegistry
 
 OPERATOR_MAP = {
     "operator.eq": operator.eq,

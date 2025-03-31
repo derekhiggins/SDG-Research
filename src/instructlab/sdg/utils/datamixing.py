@@ -3,13 +3,14 @@ import json
 import os
 
 # Third Party
-from datasets import Dataset, load_dataset
 import yaml
 
 # First Party
+from datasets import Dataset, load_dataset
 from instructlab.sdg.logger_config import setup_logger
-from .datautils import safe_concatenate_datasets
 
+# Local
+from .datautils import safe_concatenate_datasets
 
 LOGGER = setup_logger(__name__)
 ALLOWED_COLS = ["id", "messages", "metadata"]

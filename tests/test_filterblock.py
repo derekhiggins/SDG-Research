@@ -3,10 +3,8 @@ from unittest.mock import patch
 import operator
 import unittest
 
-# Third Party
-from datasets import Dataset, Features, Value
-
 # First Party
+from datasets import Dataset, Features, Value
 from instructlab.sdg.filterblock import FilterByValueBlock
 
 

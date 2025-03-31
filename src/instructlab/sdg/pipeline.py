@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-# Third Party
+# First Party
 from datasets import Dataset
 
 # Local

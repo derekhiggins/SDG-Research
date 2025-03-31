@@ -1,15 +1,16 @@
-# Third Party
-from datasets import load_dataset
-from openai import OpenAI
-import click
+# Standard
 import os
 
+# Third Party
+from openai import OpenAI
+import click
+
 # First Party
+from datasets import load_dataset
 from instructlab.sdg.flow import Flow
 from instructlab.sdg.logger_config import setup_logger
 from instructlab.sdg.pipeline import Pipeline
 from instructlab.sdg.sdg import SDG
-
 
 logger = setup_logger(__name__)
 

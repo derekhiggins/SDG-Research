@@ -2,10 +2,10 @@
 import operator
 
 # Third Party
-from datasets import Dataset
 from openai import OpenAI
 
 # First Party
+from datasets import Dataset
 from src.instructlab.sdg import SDG
 from src.instructlab.sdg.default_flows import DEFAULT_FLOW_FILE_MAP, Flow
 from src.instructlab.sdg.pipeline import Pipeline
